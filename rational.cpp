@@ -15,6 +15,9 @@ int main()
     cout << 3 << " + " << r3 << " * " << "(" << r2 << " + " << 2 << ")" << "/"
     << "(" << r5 << " - " << r3 << ")" << " = " << res3 << endl;
 
+    Rational res4 = res3;
+    cout << res4;
+
 //    Rational r1(5508, 1980);
 //    Rational r2=r1;
 //    cout << r1;

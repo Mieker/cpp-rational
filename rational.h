@@ -19,16 +19,17 @@ public:
        this->denom = copy.denominator();
    };
    //tworzy rationala a w zasadzie nowe odniesienie do niego bo beda mialy ten sam memo space
-   Rational& operator=(const Rational& other)
+   Rational& operator=(const Rational& other)                                                                   //
    {
        if (&other != this) {
+
          this->numer = other.numerator();
          this->denom = other.denominator();
        }
        return *this;
    };
    //tworzy rational z inta czyli robi przykladowo z 12 na 12/1, z 6 na 6/1
-   Rational& operator=(int i)
+   Rational& operator=(int i)                                                                                   //
    {
        this->numer = i;
        this->denom = 1;
@@ -59,19 +60,19 @@ public:
        else {
            int tempNumer = this->numer * other.denom + other.numer * this->denom;
            int tempDenom = this->denom * other.denom;
-           return Rational {tempNumer, tempDenom};
+           return normalize(Rational {tempNumer, tempDenom});
        }
    };
    //odejmowanie rational
    Rational operator-(const Rational& other) const
    {
        if (this->denom == other.denom) {
-           return Rational {this->numer - other.numer, this->denom};
+           return normalize(Rational {this->numer - other.numer, this->denom});
        }
        else {
            int tempNumer = this->numer * other.denom - other.numer * this->denom;
            int tempDenom = this->denom * other.denom;
-           return Rational {tempNumer, tempDenom};
+           return normalize(Rational {tempNumer, tempDenom});
        }
    };
    //mnozenie rational
@@ -79,14 +80,14 @@ public:
    {
        int tempNumer = this->numer * other.numer;
        int tempDenom = this->denom * other.denom;
-       return Rational {tempNumer, tempDenom};
+       return normalize(Rational {tempNumer, tempDenom});
    };
    //dzielenie rational
    Rational operator/(const Rational& other) const
    {
        int tempNumer = this->numer * other.denom;
        int tempDenom = this->denom * other.numer;
-       return Rational {tempNumer, tempDenom};
+       return normalize(Rational {tempNumer, tempDenom});
    };
 
    //umozliwia zapis Rational r w postaci -r lub +r
@@ -107,15 +108,9 @@ public:
 
    static int findGCD(int a, int b)
    {
-       while(a!=b) {
-          if(a>b) {
-              a-=b;
-          }
-          else {
-              b-=a;
-          }
-       }
-       return a;
+      if(a!=b)
+        return findGCD(a>b?a-b:a,b>a?b-a:b);
+      return a;
    };
 
 private:
@@ -140,11 +135,11 @@ private:
    };
 
    //cout
-   friend std::ostream& operator<<(std::ostream &os, const Rational &r)
+   friend std::ostream& operator<<(std::ostream &os, const Rational &rr)
    {
-      Rational rr = normalize(r);
+//      Rational rr = normalize(r);
 
-       if (r.numer < 0) {
+       if (rr.numer < 0) {
           os << "(" << rr.numer << "/" << rr.denom << ")";
       }
       else {
