@@ -17,8 +17,10 @@ int main()
 
 
 
-
     ////////////////////////////////////////////////////
+//    Rational r2(2,11);
+//    cout << +r2 << endl;
+//    cout << -r2 << endl;
 //    Rational r41{3,4};
 //    Rational r42 = 2 / r41;
 //    cout << r42 << endl;

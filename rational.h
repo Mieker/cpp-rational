@@ -6,7 +6,17 @@ class Rational
 {
 public:
    //konstruktor
-   Rational(int numerator = 0, int denominator = 1) : numer{numerator}, denom{denominator} {};
+   Rational(int numerator = 0, int denominator = 1)
+   {
+       if (denominator < 0) {
+           this->numer = abs(numerator) * (-1);
+           this->denom = abs(denominator);
+       }
+       else {
+           this->numer = numerator;
+           this->denom = denominator;
+       }
+   };
    //destruktor
    ~Rational() {}
    //tworzy rational kopiujac podany w argumencie inny rational
@@ -78,8 +88,15 @@ public:
        return Rational {tempNumer, tempDenom};
    };
 
-   Rational operator+() const;                                             //?? //nie rozumiem
-   Rational operator-() const;
+   //umozliwia zapis Rational r w postaci -r lub +r
+   Rational operator+() const
+   {
+       return *this*(+1);
+   };
+   Rational operator-() const
+   {
+       return *this*(-1);
+   };
 
    bool operator==(const Rational& other) const;                                //zwraca booleana uzywajac operatory logiczne porownujac dwa rationale
    bool operator>=(const Rational& other) const;
@@ -98,7 +115,12 @@ private:
    //cout
    friend std::ostream& operator<<(std::ostream &os, const Rational &r)
    {
-      os << r.numer << "/" << r.denom;
+      if (r.numer < 0) {
+          os << "(" << r.numer << "/" << r.denom << ")";
+      }
+      else {
+          os << r.numer << "/" << r.denom;
+      }
       return os;
    };
    //cin
