@@ -15,6 +15,15 @@ int main()
     cout << 3 << " + " << r3 << " * " << "(" << r2 << " + " << 2 << ")" << "/"
     << "(" << r5 << " - " << r3 << ")" << " = " << res3 << endl;
 
+//    Rational r1(5508, 1980);
+//    Rational r2=r1;
+//    cout << r1;
+
+//    Rational r1(5508, 1980);
+//    cout << r1.getGCD();
+
+//    Rational r2 = Rational::normalize(r1);
+//    cout << r2;
 
 
     ////////////////////////////////////////////////////

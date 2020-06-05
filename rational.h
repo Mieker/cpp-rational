@@ -8,14 +8,7 @@ public:
    //konstruktor
    Rational(int numerator = 0, int denominator = 1)
    {
-       if (denominator < 0) {
-           this->numer = abs(numerator) * (-1);
-           this->denom = abs(denominator);
-       }
-       else {
-           this->numer = numerator;
-           this->denom = denominator;
-       }
+       initialize(numerator, denominator);
    };
    //destruktor
    ~Rational() {}
@@ -45,10 +38,18 @@ public:
    int numerator() const { return numer; }
    //getter denom
    int denominator() const { return denom; }
+   //getter gcdND - //////////////////////////////do usuniecia
+   int getGCD() const { return gcdND; }
 
-   static Rational normalize(const Rational& other);                            //tworzy static rational z innego rationala
-   static Rational normalized(int numerator, int denominator);                  //tworzy static rational z dwoch intow w postaci numeratora i denominatora
-                                                                                //byc moze chodzi tutaj o to ze normalizujemy l.rzeczywista np z 20/10 na 2 alby z 3/12 na 1/4
+   static Rational normalize(const Rational& other)
+   {
+       Rational r(other.numer / other.gcdND, other.denom / other.gcdND);
+       return r;
+   };
+   static Rational normalized(int numerator, int denominator)
+   {
+       return Rational::normalize(Rational(numerator, denominator));
+   };
    //dodawanie rational
    Rational operator+(const Rational& other) const
    {
@@ -104,22 +105,50 @@ public:
    bool operator>(const Rational& other) const;
    bool operator<(const Rational& other) const;
 
+   static int findGCD(int a, int b)
+   {
+       while(a!=b) {
+          if(a>b) {
+              a-=b;
+          }
+          else {
+              b-=a;
+          }
+       }
+       return a;
+   };
+
 private:
    int numer;
    int denom;
    //greatest common divisor - najwiekszy wspolny dzielnik
    int gcdND;
 
-   void initialize(int numerator, int denominator);                        //?? //void ktory inicjalizuje cos z liczba rzeczywista ale nie wiem dokladnie o co kaman
+
+
+   void initialize(int numerator, int denominator)
+   {
+       if (denominator < 0) {
+           this->numer = abs(numerator) * (-1);
+           this->denom = abs(denominator);
+       }
+       else {
+           this->numer = numerator;
+           this->denom = denominator;
+       }
+       this->gcdND = findGCD(abs(numerator), abs(denominator));
+   };
 
    //cout
    friend std::ostream& operator<<(std::ostream &os, const Rational &r)
    {
-      if (r.numer < 0) {
-          os << "(" << r.numer << "/" << r.denom << ")";
+      Rational rr = normalize(r);
+
+       if (r.numer < 0) {
+          os << "(" << rr.numer << "/" << rr.denom << ")";
       }
       else {
-          os << r.numer << "/" << r.denom;
+          os << rr.numer << "/" << rr.denom;
       }
       return os;
    };
@@ -186,3 +215,7 @@ Rational operator/(int i, const Rational& r)
     int tempDenom = r.numerator();
     return Rational {tempNumer, tempDenom};
 };
+
+
+
+// liczby calkowite ustaw wyswietlanie poprzez cout -> if denom = 1 os = numer
