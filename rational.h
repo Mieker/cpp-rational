@@ -94,11 +94,61 @@ public:
        return *this*(-1);
    };
 
-   bool operator==(const Rational& other) const;
-   bool operator>=(const Rational& other) const;
-   bool operator<=(const Rational& other) const;
-   bool operator>(const Rational& other) const;
-   bool operator<(const Rational& other) const;
+   bool operator==(const Rational& other) const
+   {
+       Rational a(this->numer * other.denom, this->denom * other.denom);
+       Rational b(other.numer * this->denom, other.denom * this->denom);
+       if (a.numer == b.numer) {
+            return true;
+       }
+       else {
+               return false;
+       }
+   };
+   bool operator>=(const Rational& other) const
+   {
+       Rational a(this->numer * other.denom, this->denom * other.denom);
+       Rational b(other.numer * this->denom, other.denom * this->denom);
+       if (a.numer >= b.numer) {
+            return true;
+       }
+       else {
+               return false;
+       }
+   };
+   bool operator<=(const Rational& other) const
+   {
+       Rational a(this->numer * other.denom, this->denom * other.denom);
+       Rational b(other.numer * this->denom, other.denom * this->denom);
+       if (a.numer <= b.numer) {
+            return true;
+       }
+       else {
+               return false;
+       }
+   };
+   bool operator>(const Rational& other) const
+   {
+       Rational a(this->numer * other.denom, this->denom * other.denom);
+       Rational b(other.numer * this->denom, other.denom * this->denom);
+       if (a.numer > b.numer) {
+            return true;
+       }
+       else {
+               return false;
+       }
+   };
+   bool operator<(const Rational& other) const
+   {
+       Rational a(this->numer * other.denom, this->denom * other.denom);
+       Rational b(other.numer * this->denom, other.denom * this->denom);
+       if (a.numer < b.numer) {
+            return true;
+       }
+       else {
+               return false;
+       }
+   };
 
    static int findGCD(int a, int b)
    {
